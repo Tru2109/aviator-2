@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aviator Predictor Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+    <style>
+        body { margin: 40px; background: #fdfdfd; }
+        h1 { color: #9b4dca; }
+        .container { max-width: 800px; margin: auto; }
+        img { max-width: 100%; }
+        .section { margin-bottom: 2em; }
+        .result { font-size: 1.1em; color: #333; margin-top: 1em; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🛩️ Aviator Predictor Bot</h1>
+
+    <div class="section">
+        <form method="post" enctype="multipart/form-data">
+            <label>📂 Load Crash CSV File:</label>
+            <input type="file" name="csvfile">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="section">
+        <form method="post">
+            <button type="submit" name="simulate">➕ Simulate New Round</button>
+            <button type="submit" name="predict">🔮 Predict Next Crash</button>
+        </form>
+    </div>
+
+    {% if prediction %}
+    <div class="section">
+        <strong>Prediction:</strong> <span style="color: red">{{ prediction }}x</span>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <form method="post">
+            <label>🎯 Test Strategy - Cashout at:</label>
+            <input type="text" name="cashout" value="2.0">
+            <button type="submit" name="strategy">Test Strategy</button>
+        </form>
+        {% if result %}
+            <div class="result">{{ result }}</div>
+        {% endif %}
+    </div>
+
+    {% if graph_url %}
+    <div class="section">
+        <h3>📈 Crash History Graph</h3>
+        <img src="{{ graph_url }}" alt="Crash Graph">
+    </div>
+    {% endif %}
+
+    {% if history %}
+    <div class="section">
+        <h3>📋 Last 10 Crashes</h3>
+        <ul>
+            {% for val in history %}<li>{{ val }}x</li>{% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
